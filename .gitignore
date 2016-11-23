@@ -22,3 +22,5 @@ _testmain.go
 *.exe
 *.test
 *.prof
+example/rpc/client/client
+example/rpc/server/server
