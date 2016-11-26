@@ -23,7 +23,7 @@ func NewRPCClient(rpcServer string, timeout int) *RPCClient {
 	return client
 }
 
-func (this *RPCClient) close() {
+func (this *RPCClient) Close() {
 	if this.rpcClient != nil {
 		this.rpcClient.Close()
 		this.rpcClient = nil
@@ -78,10 +78,10 @@ func (this *RPCClient) Call(method string, args interface{}, reply interface{}) 
 	select {
 	case <-time.After(timeout):
 		log.Printf("[WARN] rpc call timeout %v => %v", this.rpcClient, this.RpcServer)
-		this.close()
+		this.Close()
 	case err := <-done:
 		if err != nil {
-			this.close()
+			this.Close()
 			return err
 		}
 	}
