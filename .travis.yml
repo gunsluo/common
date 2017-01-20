@@ -13,12 +13,18 @@ notifications:
 sudo: false
 
 install:
+  - go get github.com/mattn/goveralls
 
 before_install: 
 
 script:
-- go build ./...
+  - go test -v -covermode=count -coverprofile=coverage.out
+  - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
 
 before_deploy: 
 
 deploy: 
+
+env:
+  global:
+    secure: "koUAwjH7SYBPOTwJXKIfdN9hUK84ilwvX2SMs/LRRuX4eW350wlZ3Sci+XgEJPwI6sR47SYtKJNxzo9MoLOmooYhFeKyGMqVwaWp6lFkY+NhS9/wcZRs5pCXG24OoO6DB+t4Gdk9eGgsvELO8yWVnFfl4Ykw0G3zZtmsBKO8AFVrEgjK6hUxt49iE6ofkTx82AI/p1oDvKtIcD6Ynziqz6P0DJoxILQ3cU5wqmttZLL3y8KmgqiYOcGSyLPT4bt7JLoY3lLRYkPEUZCzEmzd0uxlga3pncy+Naz6sVUg9unX59/0WyMbJPcyn8MUjk934Y9QHmgJL3LxZvqyX1qj0MHWj5SJnHSgy/jRW3GWbjZFcBGHS3ra+mEbWtC+1qmYQEieOmt+W1EDfD1gVY70Uf+8PCtyP8+3YoTRlvU9hrk83LF/9mUjY3BVV+RrA6r4doAFnIwZ5eFN0GGnqw0IMLqhiVcI+3nODm8pw5CL1+25R5+Pcj58h0Md0gqOQIBmvtxHkWO/brbC5dz/f9zOLXYbp4R2tSIXlQkRRH924i5h5tNg6B8S7TGZlz1Idq5+LY4W/eUxIEU32c7gPgDcjwd8ifLsC7Nga+Za0Ov+v9yx7NlAEzUF6bYDT+EhC15BZgAJJua1iO8961VyWXQE6uTvea3X7P/CNSNk8bZh7hU="
