@@ -1,4 +1,4 @@
-#公共代码
+#公共代码 [![Build Status](https://travis-ci.org/gunsluo/common.svg?branch=master)](https://travis-ci.org/gunsluo/common)
 
 ##RPC
 

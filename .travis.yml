@@ -1,11 +1,14 @@
 language: go
 
 go:
-  - 1.7.x
   - master
 
 notifications:
-  email: false
+  email:
+    recipients:
+      - gunsluo@gmail.com
+  on_success: change
+  on_failure: always
 
 sudo: false
 
