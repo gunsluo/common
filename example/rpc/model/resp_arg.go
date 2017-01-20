@@ -2,13 +2,11 @@ package model
 
 import (
 	"fmt"
-
-	"git.oschina.net/wormholelogic/lib/rpc/model"
 )
 
 type ResponseArg struct {
 	RespArgOne string `json:"resp_arg_one"`
-	model.CommonRPCResponse
+	CommonRPCResponse
 }
 
 func (this *ResponseArg) String() string {

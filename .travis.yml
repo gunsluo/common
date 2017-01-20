@@ -1,0 +1,21 @@
+language: go
+
+go:
+  - 1.7.x
+  - master
+
+notifications:
+  email: false
+
+sudo: false
+
+install:
+
+before_install: 
+
+script:
+- go build ./...
+
+before_deploy: 
+
+deploy: 
