@@ -1,4 +1,5 @@
-#公共代码 [![Build Status](https://travis-ci.org/gunsluo/common.svg?branch=master)](https://travis-ci.org/gunsluo/common)
+#公共代码 
+[![Build Status](https://travis-ci.org/gunsluo/common.svg?branch=master)](https://travis-ci.org/gunsluo/common) [![Coverage Status](https://coveralls.io/repos/github/gunsluo/common/badge.svg)](https://coveralls.io/github/gunsluo/common)
 
 ##RPC
 
