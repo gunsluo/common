@@ -1,4 +1,5 @@
 package model
 
-type NullRpcRequest struct {
+// NullRPCRequest define null RPC Request
+type NullRPCRequest struct {
 }

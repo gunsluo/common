@@ -1,5 +1,5 @@
 #公共代码 
-[![Build Status](https://travis-ci.org/gunsluo/common.svg?branch=master)](https://travis-ci.org/gunsluo/common) [![Coverage Status](https://coveralls.io/repos/github/gunsluo/common/badge.svg?branch=master)](https://coveralls.io/github/gunsluo/common?branch=master)
+[![Build Status](https://travis-ci.org/gunsluo/common.svg?branch=master)](https://travis-ci.org/gunsluo/common) [![Coverage Status](https://coveralls.io/repos/github/gunsluo/common/badge.svg?branch=master)](https://coveralls.io/github/gunsluo/common?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/gunsluo/common)](https://goreportcard.com/report/github.com/gunsluo/common)
 
 ##RPC
 
@@ -17,7 +17,7 @@ import (
 
 func main() {
 
-	client := rpc.NewRPCClient("127.0.0.1:9999", 10)
+	client := rpc.NewClient("127.0.0.1:9999", 10)
 
 	req := new(model.RequestArg)
 	req.ArgOne = "test"
@@ -44,8 +44,10 @@ import (
 	"github.com/gunsluo/common/rpc"
 )
 
+// Handle define handle
 type Handle int
 
+// Test  test is example
 func (t *Handle) Test(args *model.RequestArg, reply *model.ResponseArg) error {
 
 	fmt.Println("receive:", args)
@@ -54,14 +56,14 @@ func (t *Handle) Test(args *model.RequestArg, reply *model.ResponseArg) error {
 	reply.Code = 200
 	reply.Msg = "Success"
 
-	fmt.Println("respone:", reply)
+	fmt.Println("response:", reply)
 
 	return nil
 }
 
 func main() {
 
-	server := rpc.NewRPCServer("0.0.0.0:9999")
+	server := rpc.NewServer("0.0.0.0:9999")
 	server.Register(new(Handle))
 
 	server.Run()

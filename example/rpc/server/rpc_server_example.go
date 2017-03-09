@@ -7,8 +7,10 @@ import (
 	"github.com/gunsluo/common/rpc"
 )
 
+// Handle define handle
 type Handle int
 
+// Test  test is example
 func (t *Handle) Test(args *model.RequestArg, reply *model.ResponseArg) error {
 
 	fmt.Println("receive:", args)
@@ -17,14 +19,14 @@ func (t *Handle) Test(args *model.RequestArg, reply *model.ResponseArg) error {
 	reply.Code = 200
 	reply.Msg = "Success"
 
-	fmt.Println("respone:", reply)
+	fmt.Println("response:", reply)
 
 	return nil
 }
 
 func main() {
 
-	server := rpc.NewRPCServer("0.0.0.0:9999")
+	server := rpc.NewServer("0.0.0.0:9999")
 	server.Register(new(Handle))
 
 	server.Run()

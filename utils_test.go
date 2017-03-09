@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func test_newjson(filename, content string) error {
+func testNewjson(filename, content string) error {
 	f, err := os.Create(filename)
 	if err != nil {
 		return err
@@ -27,7 +27,7 @@ func test_newjson(filename, content string) error {
 	return nil
 }
 
-func test_rmjson(filename string) error {
+func testRmjson(filename string) error {
 	err := os.Remove(filename)
 	if err != nil {
 		return err
@@ -36,16 +36,16 @@ func test_rmjson(filename string) error {
 	return nil
 }
 
-func test_before(t *testing.T, filename string) {
+func testBefore(t *testing.T, filename string) {
 	var content = "  jerrylou  "
-	err := test_newjson(filename, content)
+	err := testNewjson(filename, content)
 	if err != nil {
 		t.Error("Prepare the data is Interrupted.")
 	}
 }
 
-func test_after(t *testing.T, filename string) {
-	err := test_rmjson(filename)
+func testAfter(t *testing.T, filename string) {
+	err := testRmjson(filename)
 	if err != nil {
 		t.Error("Prepare the data is Interrupted.")
 	}
@@ -53,7 +53,7 @@ func test_after(t *testing.T, filename string) {
 
 func Test_ToString(t *testing.T) {
 
-	test_before(t, ".test.json")
+	testBefore(t, ".test.json")
 
 	str, err := ToString(".test.json")
 	if err != nil {
@@ -65,24 +65,24 @@ func Test_ToString(t *testing.T) {
 		t.Error("ToString not expect vaule. expect:", expect, "act:", str)
 	}
 
-	test_after(t, ".test.json")
+	testAfter(t, ".test.json")
 }
 
 func Test_ToString2(t *testing.T) {
 
-	test_before(t, ".test.json")
+	testBefore(t, ".test.json")
 
 	_, err := ToString(".test2.json")
 	if err == nil {
 		t.Error("ToString exec failed.")
 	}
 
-	test_after(t, ".test.json")
+	testAfter(t, ".test.json")
 }
 
 func Test_ToTrimString(t *testing.T) {
 
-	test_before(t, ".test.json")
+	testBefore(t, ".test.json")
 
 	str, err := ToTrimString(".test.json")
 	if err != nil {
@@ -94,17 +94,17 @@ func Test_ToTrimString(t *testing.T) {
 		t.Error("ToTrimString not expect vaule. expect:", expect, "act:", str)
 	}
 
-	test_after(t, ".test.json")
+	testAfter(t, ".test.json")
 }
 
 func Test_ToTrimString2(t *testing.T) {
 
-	test_before(t, ".test.json")
+	testBefore(t, ".test.json")
 
 	_, err := ToTrimString(".test2.json")
 	if err == nil {
 		t.Error("ToTrimString exec failed.")
 	}
 
-	test_after(t, ".test.json")
+	testAfter(t, ".test.json")
 }

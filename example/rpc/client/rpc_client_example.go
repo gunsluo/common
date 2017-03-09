@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	client := rpc.NewRPCClient("127.0.0.1:9999", 10)
+	client := rpc.NewClient("127.0.0.1:9999", 10)
 
 	req := new(model.RequestArg)
 	req.ArgOne = "test"

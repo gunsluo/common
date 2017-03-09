@@ -7,7 +7,8 @@ import (
 	"time"
 )
 
-func NewClient(network, address string, timeout time.Duration) (*rpc.Client, error) {
+// NewRPCClient new client
+func NewRPCClient(network, address string, timeout time.Duration) (*rpc.Client, error) {
 	conn, err := net.DialTimeout(network, address, timeout)
 	if err != nil {
 		return nil, err
@@ -15,7 +16,8 @@ func NewClient(network, address string, timeout time.Duration) (*rpc.Client, err
 	return rpc.NewClient(conn), nil
 }
 
-func NewJsonClient(network, address string, timeout time.Duration) (*rpc.Client, error) {
+// NewJSONClient new jsonclient
+func NewJSONClient(network, address string, timeout time.Duration) (*rpc.Client, error) {
 	conn, err := net.DialTimeout(network, address, timeout)
 	if err != nil {
 		return nil, err

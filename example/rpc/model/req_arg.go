@@ -2,10 +2,12 @@ package model
 
 import "fmt"
 
+// RequestArg example request
 type RequestArg struct {
 	ArgOne string `json:"arg"`
 }
 
-func (this *RequestArg) String() string {
-	return fmt.Sprintf("<arg: %s>", this.ArgOne)
+// String request to string
+func (req *RequestArg) String() string {
+	return fmt.Sprintf("<arg: %s>", req.ArgOne)
 }

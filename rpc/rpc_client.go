@@ -8,47 +8,50 @@ import (
 	"time"
 )
 
-type RPCClient struct {
+// Client define rpc client
+type Client struct {
 	sync.Mutex
 	rpcClient *rpc.Client
-	RpcServer string
+	rpcServer string
 	Timeout   time.Duration
 }
 
-func NewRPCClient(rpcServer string, timeout int) *RPCClient {
-	client := new(RPCClient)
-	client.RpcServer = rpcServer
+// NewClient new rpc client
+func NewClient(rpcServer string, timeout int) *Client {
+	client := new(Client)
+	client.rpcServer = rpcServer
 	client.Timeout = time.Duration(timeout) * time.Second
 
 	return client
 }
 
-func (this *RPCClient) Close() {
-	if this.rpcClient != nil {
-		this.rpcClient.Close()
-		this.rpcClient = nil
+// Close rpc client close
+func (client *Client) Close() {
+	if client.rpcClient != nil {
+		client.rpcClient.Close()
+		client.rpcClient = nil
 	}
 }
 
-func (this *RPCClient) insureConn() {
-	if this.rpcClient != nil {
+func (client *Client) insureConn() {
+	if client.rpcClient != nil {
 		return
 	}
 
 	var err error
-	var retry int = 1
+	retry := 1
 
 	for {
-		if this.rpcClient != nil {
+		if client.rpcClient != nil {
 			return
 		}
 
-		this.rpcClient, err = NewJsonClient("tcp", this.RpcServer, this.Timeout)
+		client.rpcClient, err = NewJSONClient("tcp", client.rpcServer, client.Timeout)
 		if err == nil {
 			return
 		}
 
-		log.Printf("dial %s fail: %v", this.RpcServer, err)
+		log.Printf("dial %s fail: %v", client.rpcServer, err)
 
 		if retry > 6 {
 			retry = 1
@@ -60,28 +63,29 @@ func (this *RPCClient) insureConn() {
 	}
 }
 
-func (this *RPCClient) Call(method string, args interface{}, reply interface{}) error {
+// Call rpc client send msg
+func (client *Client) Call(method string, args interface{}, reply interface{}) error {
 
-	this.Lock()
-	defer this.Unlock()
+	client.Lock()
+	defer client.Unlock()
 
-	this.insureConn()
+	client.insureConn()
 
 	timeout := time.Duration(50 * time.Second)
 	done := make(chan error)
 
 	go func() {
-		err := this.rpcClient.Call(method, args, reply)
+		err := client.rpcClient.Call(method, args, reply)
 		done <- err
 	}()
 
 	select {
 	case <-time.After(timeout):
-		log.Printf("[WARN] rpc call timeout %v => %v", this.rpcClient, this.RpcServer)
-		this.Close()
+		log.Printf("[WARN] rpc call timeout %v => %v", client.rpcClient, client.rpcServer)
+		client.Close()
 	case err := <-done:
 		if err != nil {
-			this.Close()
+			client.Close()
 			return err
 		}
 	}

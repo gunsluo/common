@@ -7,22 +7,25 @@ import (
 	"net/rpc/jsonrpc"
 )
 
-type RPCServer struct {
+// Server rpc server
+type Server struct {
 	server *rpc.Server
 	Listen string
 }
 
-func NewRPCServer(listen string) *RPCServer {
-	rpcServer := new(RPCServer)
+// NewServer new rpc server
+func NewServer(listen string) *Server {
+	rpcServer := new(Server)
 	rpcServer.Listen = listen
 	rpcServer.server = rpc.NewServer()
 
 	return rpcServer
 }
 
-func (this *RPCServer) Run() {
+// Run listen rpc server
+func (server *Server) Run() {
 
-	tcpAddr, err := net.ResolveTCPAddr("tcp", this.Listen)
+	tcpAddr, err := net.ResolveTCPAddr("tcp", server.Listen)
 	if err != nil {
 		panic(err)
 	}
@@ -31,7 +34,7 @@ func (this *RPCServer) Run() {
 	if err != nil {
 		panic(err)
 	}
-	log.Println("rpc listening", this.Listen)
+	log.Println("rpc listening", server.Listen)
 
 	for {
 		conn, err := listener.Accept()
@@ -40,10 +43,11 @@ func (this *RPCServer) Run() {
 			continue
 		}
 		// go rpc.ServeConn(conn)
-		go this.server.ServeCodec(jsonrpc.NewServerCodec(conn))
+		go server.server.ServeCodec(jsonrpc.NewServerCodec(conn))
 	}
 }
 
-func (this *RPCServer) Register(rcvr interface{}) error {
-	return this.server.Register(rcvr)
+// Register rpc server register recipient
+func (server *Server) Register(rcvr interface{}) error {
+	return server.server.Register(rcvr)
 }
